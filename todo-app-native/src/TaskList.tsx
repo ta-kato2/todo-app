@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
-import CustomButton from './CustomButton';
+import { StyleSheet, Text, View, Button, FlatList, Alert } from 'react-native';
+import TaskAddButton from './TaskAddButton';
 import TaskListItem from './TaskListItem';
 import Task from './model/Task';
 
@@ -22,20 +22,25 @@ const tasks:Task[] = [
     },
 ];
 
+const styles = StyleSheet.create({
+  container: {
+    height: '100%'
+  },
+});
+
 const TaskList = (props) => {
+    const moveToTaskDetailFunc = (task: Task) => {
+        props.navigation.navigate('タスク詳細', {task: task});
+    };
+
     return (
-        <View>
-            <Text>タスク一覧画面</Text>
+        <View style={styles.container}>
             <FlatList
-                    data={tasks}
-                    renderItem={({ item }) => <TaskListItem task={item}/>}
-                    keyExtractor={item => item.id.toString()}
-                  />
-            <Button
-                title="Press me"
-                onPress={() => props.navigation.navigate('タスク詳細')}
-                color={'#FFAA99'}
+                data={tasks}
+                renderItem={({ item }) => <TaskListItem task={item} moveToDetail={moveToTaskDetailFunc}/>}
+                keyExtractor={item => item.id.toString()}
             />
+            <TaskAddButton/>
         </View>
     );
 };

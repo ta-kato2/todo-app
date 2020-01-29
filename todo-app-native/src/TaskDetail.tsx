@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const TaskDetail = () => {
+const TaskDetail = (props) => {
     return (
         <View>
-            <Text>タスク詳細画面</Text>
+            <Text>{props.route.params.task.id}</Text>
+            <Text>{props.route.params.task.title}</Text>
         </View>
     );
 };
