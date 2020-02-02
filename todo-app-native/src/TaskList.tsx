@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Alert,Image } from 'react-native';
 import TaskAddButton from './TaskAddButton';
 import TaskListItem from './TaskListItem';
 import Task from './model/Task';
@@ -33,6 +33,12 @@ const TaskList = (props) => {
         props.navigation.navigate('タスク詳細', {task: task});
     };
 
+    const moveToTaskCreateFunc = () => {
+       props.navigation.navigate('タスク作成', {createTask: (task: Task) => {
+            console.log(task);
+       }});
+    };
+
     return (
         <View style={styles.container}>
             <FlatList
@@ -40,7 +46,11 @@ const TaskList = (props) => {
                 renderItem={({ item }) => <TaskListItem task={item} moveToDetail={moveToTaskDetailFunc}/>}
                 keyExtractor={item => item.id.toString()}
             />
-            <TaskAddButton/>
+            <TaskAddButton moveToAdd={moveToTaskCreateFunc}/>
+            <Image
+                style={{width: 50, height: 50}}
+                source={require('../assets/bonbie.jpeg')}
+            />
         </View>
     );
 };

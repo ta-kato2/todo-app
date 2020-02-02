@@ -10,10 +10,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const TaskAddButton = () => {
+interface Props {
+    moveToAdd: () => void
+}
+
+const TaskAddButton = (props) => {
     return (
-        <TouchableOpacity style={styles.container} onPress={() => {}}>
-            <AntDesign name="pushpin" size={80} color="#0000FF" />
+        <TouchableOpacity style={styles.container} onPress={() => props.moveToAdd()}>
+            <AntDesign name="pluscircle" size={80} color="#0000FF" />
         </TouchableOpacity>
     );
 };
