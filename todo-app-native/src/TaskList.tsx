@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button, FlatList, Alert,Image } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Alert,Image,TouchableOpacity } from 'react-native';
 import TaskAddButton from './TaskAddButton';
 import TaskListItem from './TaskListItem';
 import Task from './model/Task';
@@ -51,16 +51,27 @@ const TaskList = (props) => {
        }});
     };
 
+    const handleDeleteTask = (target: Task) => {
+        const list = data.map(task => {
+            if (task.id !== target.id) return task;
+            task.title = '削除済み';
+            return task;
+        });
+        setData(list)
+    };
+
     return (
         <View style={styles.container}>
             <SwipeListView
                 data={data}
-                renderItem={({ item }, rowMap) => <TaskListItem task={item} moveToDetail={moveToTaskDetailFunc}/>}
-                renderHiddenItem={ (data, rowMap) => (
-                                        <View style={styles.rowBack}>
-                                            <Text>Left</Text>
-                                            <Text>Right</Text>
-                                        </View>
+                renderItem={({item}, rowMap) => <TaskListItem task={item} moveToDetail={moveToTaskDetailFunc}/>}
+                renderHiddenItem={ ({item}, rowMap) => (
+                                      <View style={styles.rowBack}>
+                                          <TouchableOpacity onPress={() => handleDeleteTask(item)}>
+                                            <Text>削除</Text>
+                                          </TouchableOpacity>
+                                          <Text>Right</Text>
+                                      </View>
                                  )}
                 leftOpenValue={75}
                 rightOpenValue={-75}
