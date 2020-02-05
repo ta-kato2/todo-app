@@ -5,13 +5,14 @@ import { useForm, Controller } from 'react-hook-form'
 
 const TaskCreate = (props) => {
     const [title, setTitle] = useState(null);
-   const { register, setValue, handleSubmit, errors } = useForm();
+    const { register, setValue, handleSubmit, errors } = useForm();
     const onSubmit = () => {
-          props.route.params.createTask({
-                                        id: 999,
+        props.route.params.createTask({
+                                         id: 999999,
                                          title: title,
                                          completed: false
                                         });
+        props.navigation.navigate('タスク一覧');
     };
 
     return (
@@ -19,9 +20,8 @@ const TaskCreate = (props) => {
             <TextInput
               style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
               value={title}
-              ref={register({name: 'title'}, {required: true})}
+              ref={(register({name: 'title'}, {required: true}) as any)}
               onChange={(event) => {
-              console.log(event.nativeEvent.text)
                   setTitle(event.nativeEvent.text);
                   setValue('title', event.nativeEvent.text);
               }}
